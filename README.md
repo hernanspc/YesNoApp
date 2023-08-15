@@ -16,6 +16,6 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-<img src="https://github.com/hernanspc/FlutterCounterApp/blob/main/lib/assets/capture/screen1.png" alt="Descripción de la imagen" width="300">
+<img src="https://github.com/hernanspc/YesNoApp/blob/main/lib/assets/capture/captura1.png" alt="Descripción de la imagen" width="300">
 
-<img src="https://github.com/hernanspc/FlutterCounterApp/blob/main/lib/assets/capture/screen1.png" alt="Descripción de la imagen" width="300">
+<img src="https://github.com/hernanspc/YesNoApp/blob/main/lib/assets/capture/captura2.png" alt="Descripción de la imagen" width="300">
