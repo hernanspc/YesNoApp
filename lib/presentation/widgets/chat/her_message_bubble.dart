@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/presentation/entities/message.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+  final Message message;
+
+  const HerMessageBubble({
+    super.key,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +21,11 @@ class HerMessageBubble extends StatelessWidget {
             color: colors.secondary,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'Hola Mundo',
-              style: TextStyle(
+              message.text,
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -27,7 +33,7 @@ class HerMessageBubble extends StatelessWidget {
         ),
         const SizedBox(height: 5),
 
-        _ImageBubble(),
+        _ImageBubble(image: message.imageUrl!),
         SizedBox(
           height: 10,
         )
@@ -38,6 +44,10 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String image;
+
+  const _ImageBubble({super.key, required this.image});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -45,7 +55,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
-        'https://yesno.wtf/assets/no/20-56c4b19517aa69c8f7081939198341a4.gif',
+        image,
         width: size.width * 0.7,
         height: 150,
         fit: BoxFit.cover,
@@ -57,7 +67,14 @@ class _ImageBubble extends StatelessWidget {
             height: 150,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: const Text(
-                'La chavita esta escribiendo  y buscando una imagen'),
+              'La chavita esta buscando una imagen',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF686868),
+              ),
+            ),
           );
         },
       ),
