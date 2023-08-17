@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:yes_no_app/presentation/entities/message.dart';
 import 'package:yes_no_app/presentation/providers/chat_provider.dart';
@@ -18,12 +19,40 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   File? _selectedImage;
-
   void selectImage() async {}
 
   Future<void> _pickImageFromGallery() async {
     final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    // Verificar el estado del permiso de galería
+
+    // Mostrar el diálogo modal para seleccionar la imagen de la galería
+    final pickedImage = await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 120,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('Seleccionar imagen de la galería'),
+                onTap: () async {
+                  Navigator.pop(context,
+                      await picker.pickImage(source: ImageSource.gallery));
+                },
+              ),
+              ListTile(
+                title: Text('Cancelar'),
+                onTap: () {
+                  Navigator.pop(context, null);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
 
     if (pickedImage != null) {
       setState(() {
