@@ -8,7 +8,6 @@ import 'package:yes_no_app/presentation/providers/chat_provider.dart';
 import 'package:yes_no_app/presentation/widgets/chat/her_message_bubble.dart';
 import 'package:yes_no_app/presentation/widgets/chat/my_message_bubble.dart';
 import 'package:yes_no_app/presentation/widgets/shared/message_field_box.dart';
-import 'package:yes_no_app/utils/utils.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -18,19 +17,19 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  File? image;
+  File? _selectedImage;
 
-  void selectImage() async {
-    // print('s');
+  void selectImage() async {}
+
+  Future<void> _pickImageFromGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      print('Ruta de la imagen seleccionada: ${pickedImage.path}');
+      setState(() {
+        _selectedImage = File(pickedImage.path);
+      });
     }
-
-    // image = await pickImage(context);
-    // setState(() {});
   }
 
   @override
@@ -38,15 +37,18 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-          onTap: () => selectImage(),
+          onTap: _pickImageFromGallery,
           child: Padding(
             padding: EdgeInsets.all(4.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://esp.unbilgi.com/wp-content/uploads/2021/05/Lana-Rhoades-Facts.jpg',
-                // 'https://techstory.in/wp-content/uploads/2022/02/lana-rhoades-fb-1.jpg',
-              ),
-            ),
+            child: _selectedImage != null
+                ? CircleAvatar(
+                    backgroundImage: FileImage(_selectedImage!),
+                  )
+                : CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      'https://esp.unbilgi.com/wp-content/uploads/2021/05/Lana-Rhoades-Facts.jpg',
+                    ),
+                  ),
           ),
         ),
         title: const Text('Lana de Rey'),
